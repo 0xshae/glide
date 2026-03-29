@@ -86,8 +86,10 @@ export default function CodeShowcase() {
             </div>
 
             {/* Stark Editorial Code Block */}
-            <div className="bg-[#f5f5f5] dark:bg-[#050505] border border-black/5 dark:border-white/10 p-8 sm:p-12 h-full flex items-center transition-colors">
-                <SyntaxHighlight code={codeString} />
+            <div className="bg-[#f5f5f5] dark:bg-[#050505] border border-black/5 dark:border-white/10 p-8 sm:p-12 h-full w-full flex items-center transition-colors overflow-hidden">
+                <div className="w-full overflow-x-auto pb-4 sm:pb-0">
+                    <SyntaxHighlight code={codeString} />
+                </div>
             </div>
         </div>
       </motion.div>
