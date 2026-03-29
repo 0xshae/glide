@@ -1,50 +1,51 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, Fingerprint, Banknote } from "lucide-react";
 
 const steps = [
   {
-    icon: Download,
-    title: "1. Add Glide middleware",
-    description: "Install the package and add one line of code to your existing API routes.",
+    number: "01",
+    title: "Add Glide middleware",
+    description: "Install the package and add one line of code to your existing API routes. Designed for Next.js, Express, and standard Node environments.",
   },
   {
-    icon: Fingerprint,
-    title: "2. Verify with World ID",
-    description: "Glide silently intercepts requests and demands cryptographic proof of humanity.",
+    number: "02",
+    title: "Verify with World ID",
+    description: "Glide silently intercepts requests and demands cryptographic proof of humanity. It integrates directly with the World Chain settlement layer.",
   },
   {
-    icon: Banknote,
-    title: "3. Monetize or allow access",
-    description: "Verified humans pass free. Bots and agents hit a paywall and pay per request.",
+    number: "03",
+    title: "Monetize or allow access",
+    description: "Verified humans pass free. Bots and agents hit a paywall and pay per request seamlessly through their agentic wallets.",
   },
 ];
 
 export default function HowItWorksSection() {
   return (
-    <section className="relative py-24 sm:py-32 bg-[#0a0a0a]">
+    <section className="relative py-48 bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-8">
+        <div className="flex flex-col gap-0 border-t border-white/20">
           {steps.map((step, index) => (
             <motion.div
               key={step.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col items-center text-center"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="py-16 md:py-24 border-b border-white/10 flex flex-col md:flex-row md:items-start gap-8 md:gap-32"
             >
-              <div className="h-16 w-16 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center mb-6">
-                <step.icon className="h-6 w-6 text-white/80" strokeWidth={1.5} />
+              <div className="text-white/40 font-mono tracking-widest text-sm shrink-0 md:w-24 pt-2">
+                {step.number}
               </div>
-              <h3 className="text-xl font-bold text-white tracking-tight mb-3">
-                {step.title}
-              </h3>
-              <p className="text-white/50 text-base leading-relaxed max-w-xs mx-auto">
-                {step.description}
-              </p>
+              <div>
+                 <h3 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight mb-8">
+                   {step.title}
+                 </h3>
+                 <p className="text-xl sm:text-2xl text-white/50 leading-relaxed font-light max-w-2xl">
+                   {step.description}
+                 </p>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -1,54 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bot, User, AlertCircle } from "lucide-react";
 
 export default function ProblemSection() {
   return (
-    <section className="relative py-32 sm:py-48 overflow-hidden bg-[#0a0a0a]">
+    <section className="relative py-48 bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-3xl mx-auto mb-24"
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            The internet can’t tell fake traffic from real demand
+          <h2 className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] font-medium tracking-tight text-white leading-[1.05]">
+            The internet can’t tell fake traffic from real demand.
           </h2>
         </motion.div>
 
-        {/* Abstract visual of APIs getting flooded */}
-        <div className="relative mx-auto max-w-4xl h-[400px] flex items-center justify-center border border-white/[0.04] rounded-3xl bg-white/[0.01]">
-          {/* Bots flooding */}
-          <div className="absolute left-8 sm:left-16 flex flex-col gap-8 opacity-40">
-            <Bot className="h-8 w-8 text-red-400/50" />
-            <Bot className="h-8 w-8 text-red-400/50 translate-x-4" />
-            <Bot className="h-8 w-8 text-red-400/50 -translate-x-2" />
+        {/* Stark typographic visual instead of a complex UI box */}
+        <motion.div
+           initial={{ opacity: 0 }}
+           whileInView={{ opacity: 1 }}
+           viewport={{ once: true, margin: "-100px" }}
+           transition={{ duration: 1.5, delay: 0.3 }}
+           className="mt-32 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 border-t border-white/10 pt-16"
+        >
+          <div>
+            <div className="text-white/30 text-xs font-mono tracking-widest uppercase mb-8">The Status Quo</div>
+            <p className="text-2xl sm:text-3xl text-white/50 leading-relaxed font-light tracking-tight">
+              APIs are flooded by automated agents. Rate limits block legitimate users while sophisticated bots drain resources.
+            </p>
           </div>
-
-          {/* Real user */}
-          <div className="absolute left-8 sm:left-16 top-1/2 -translate-y-1/2">
-            <User className="h-10 w-10 text-white" />
+          <div>
+             <div className="text-white/30 text-xs font-mono tracking-widest uppercase mb-8">The Result</div>
+            <p className="text-2xl sm:text-3xl text-white/50 leading-relaxed font-light tracking-tight">
+              You pay for inference, compute, and bandwidth for traffic that will never convert.
+            </p>
           </div>
-
-          {/* Connecting lines */}
-          <div className="absolute w-1/2 h-px bg-gradient-to-r from-red-500/20 via-white/10 to-transparent left-1/4 top-1/3" />
-          <div className="absolute w-1/2 h-px bg-white/20 left-1/4 top-1/2" />
-          <div className="absolute w-1/2 h-px bg-gradient-to-r from-red-500/20 via-white/10 to-transparent left-1/4 top-2/3" />
-
-          {/* Central API visual */}
-          <div className="relative z-10 flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0c0c0c] shadow-2xl">
-            <div className="h-12 w-12 rounded-full border border-red-500/30 bg-red-500/10 flex items-center justify-center mb-4">
-              <AlertCircle className="h-5 w-5 text-red-400" />
-            </div>
-            <div className="text-sm font-mono text-white/70">api.company.com</div>
-            <div className="mt-2 text-xs font-mono text-red-400/60 uppercase tracking-widest">
-              Rate Limit Exceeded
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

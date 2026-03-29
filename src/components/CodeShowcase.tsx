@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Terminal } from "lucide-react";
 
 const codeString = `import { glideMiddleware } from '@glide/core';
 
@@ -15,11 +14,11 @@ function SyntaxHighlight({ code }: { code: string }) {
   const lines = code.split("\n");
 
   return (
-    <div className="font-mono text-[13px] sm:text-sm leading-8">
+    <div className="font-mono text-sm md:text-lg leading-loose selection:bg-white/20">
       {lines.map((line, i) => (
         <div key={i} className="flex">
-          <span className="select-none w-8 text-right mr-6 text-white/10 text-xs leading-8">
-            {i + 1}
+            <span className="select-none w-12 text-left text-white/20">
+            {String(i + 1).padStart(2, '0')}
           </span>
           <span className="whitespace-pre">
             {colorize(line)}
@@ -32,29 +31,29 @@ function SyntaxHighlight({ code }: { code: string }) {
 
 function colorize(line: string) {
   if (line.trimStart().startsWith("//")) {
-    return <span className="text-white/30 italic">{line}</span>;
+    return <span className="text-white/30">{line}</span>;
   }
 
   let resultString = line;
   
-  // Highlight important terms
+  // Highlight important terms in stark monochrome/slight accent
   if (resultString.includes("import")) {
-    resultString = resultString.replace("import", "<span class='text-white/40'>import</span>");
+    resultString = resultString.replace("import", "<span class='text-white/50'>import</span>");
   }
   if (resultString.includes("from")) {
-    resultString = resultString.replace("from", "<span class='text-white/40'>from</span>");
+    resultString = resultString.replace("from", "<span class='text-white/50'>from</span>");
   }
   if (resultString.includes("'@glide/core'")) {
     resultString = resultString.replace("'@glide/core'", "<span class='text-white'>'@glide/core'</span>");
   }
   if (resultString.includes("app.use(")) {
-    resultString = resultString.replace("app.use(", "<span class='text-white/60'>app.use(</span>");
+    resultString = resultString.replace("app.use(", "<span class='text-white/50'>app.use(</span>");
   }
   if (resultString.includes("glideMiddleware")) {
     resultString = resultString.replace("glideMiddleware", "<span class='text-white font-semibold'>glideMiddleware</span>");
   }
   if (resultString.includes("requireWorldId")) {
-    resultString = resultString.replace("requireWorldId", "<span class='text-indigo-300'>requireWorldId</span>");
+    resultString = resultString.replace("requireWorldId", "<span class='text-white'>requireWorldId</span>");
   }
   if (resultString.includes("true")) {
     resultString = resultString.replace("true", "<span class='text-white'>true</span>");
@@ -68,34 +67,28 @@ export default function CodeShowcase() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-24 sm:py-32 bg-[#0a0a0a]">
+    <section className="relative py-48 bg-black border-y border-white/10">
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
-        animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mx-auto max-w-4xl px-6 lg:px-8"
+        initial={{ opacity: 0, filter: "blur(10px)" }}
+        animate={isInView ? { opacity: 1, filter: "blur(0px)" } : {}}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        className="mx-auto max-w-7xl px-6 lg:px-8"
       >
-        <div className="rounded-3xl border border-white/[0.08] bg-[#0c0c0c] overflow-hidden shadow-2xl">
-          {/* Terminal header */}
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.04]">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-white/10" />
-              <div className="w-3 h-3 rounded-full bg-white/10" />
-              <div className="w-3 h-3 rounded-full bg-white/10" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-32 items-center">
+            <div>
+                 <h2 className="text-[2.5rem] sm:text-[4rem] font-medium tracking-tight text-white leading-[1.05] mb-8">
+                   One line of code.
+                 </h2>
+                 <p className="text-xl sm:text-2xl text-white/40 leading-relaxed font-light">
+                    Wrap your existing architecture with the Glide middleware. It handles strict World ID verification natively without disrupting your stack.
+                 </p>
             </div>
-            <div className="flex items-center gap-2 ml-4">
-              <Terminal className="h-4 w-4 text-white/20" />
-              <span className="font-mono text-xs text-white/30">
-                middleware.ts
-              </span>
-            </div>
-          </div>
 
-          {/* Code Body */}
-          <div className="p-8 sm:p-12 overflow-x-auto bg-[#0a0a0a]/50">
-            <SyntaxHighlight code={codeString} />
-          </div>
+            {/* Stark Editorial Code Block - No terminal styling */}
+            <div className="bg-[#050505] border border-white/10 p-8 sm:p-12 h-full flex items-center">
+                <SyntaxHighlight code={codeString} />
+            </div>
         </div>
       </motion.div>
     </section>
