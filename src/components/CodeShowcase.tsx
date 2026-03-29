@@ -4,9 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const codeString = `// 1. Install the gateway
-// npm install @glide-gateway/core
+// npm install @0xshae/glide-gateway
 
-import { glideMiddleware } from '@glide-gateway/core';
+import { glideMiddleware } from '@0xshae/glide-gateway';
 
 // 2. Protect your API routes
 app.use(glideMiddleware({
@@ -46,8 +46,8 @@ function colorize(line: string) {
   if (resultString.includes("from")) {
     resultString = resultString.replace("from", "<span class='text-black/50 dark:text-white/50'>from</span>");
   }
-  if (resultString.includes("'@glide-gateway/core'")) {
-    resultString = resultString.replace("'@glide-gateway/core'", "<span class='text-black dark:text-white'>'@glide-gateway/core'</span>");
+  if (resultString.includes("'@0xshae/glide-gateway'")) {
+    resultString = resultString.replace("'@0xshae/glide-gateway'", "<span class='text-black dark:text-white'>'@0xshae/glide-gateway'</span>");
   }
   if (resultString.includes("app.use(")) {
     resultString = resultString.replace("app.use(", "<span class='text-black/50 dark:text-white/50'>app.use(</span>");
