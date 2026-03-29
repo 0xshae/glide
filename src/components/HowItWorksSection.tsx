@@ -22,10 +22,10 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="relative py-48 bg-black">
+    <section className="relative py-48 bg-white dark:bg-black transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
-        <div className="flex flex-col gap-0 border-t border-white/20">
+        <div className="flex flex-col gap-0 border-t border-black/20 dark:border-white/20 transition-colors">
           {steps.map((step, index) => (
             <motion.div
               key={step.title}
@@ -33,16 +33,16 @@ export default function HowItWorksSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="py-16 md:py-24 border-b border-white/10 flex flex-col md:flex-row md:items-start gap-8 md:gap-32"
+              className="py-16 md:py-24 border-b border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-start gap-8 md:gap-32 transition-colors"
             >
-              <div className="text-white/40 font-mono tracking-widest text-sm shrink-0 md:w-24 pt-2">
+              <div className="text-black/40 dark:text-white/40 font-mono tracking-widest text-sm shrink-0 md:w-24 pt-2 transition-colors">
                 {step.number}
               </div>
               <div>
-                 <h3 className="text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-tight mb-8">
+                 <h3 className="text-3xl sm:text-4xl md:text-5xl font-medium text-black dark:text-white tracking-tight mb-8 transition-colors">
                    {step.title}
                  </h3>
-                 <p className="text-xl sm:text-2xl text-white/50 leading-relaxed font-light max-w-2xl">
+                 <p className="text-xl sm:text-2xl text-black/50 dark:text-white/50 leading-relaxed font-light max-w-2xl transition-colors">
                    {step.description}
                  </p>
               </div>
