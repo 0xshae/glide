@@ -3,9 +3,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const codeString = `import { glideMiddleware } from '@glide/core';
+const codeString = `// 1. Install the gateway
+// npm install @glide-gateway/core
 
-// Protect your API routes from fake traffic
+import { glideMiddleware } from '@glide-gateway/core';
+
+// 2. Protect your API routes
 app.use(glideMiddleware({
   requireWorldId: true
 }));`;
@@ -43,8 +46,8 @@ function colorize(line: string) {
   if (resultString.includes("from")) {
     resultString = resultString.replace("from", "<span class='text-black/50 dark:text-white/50'>from</span>");
   }
-  if (resultString.includes("'@glide/core'")) {
-    resultString = resultString.replace("'@glide/core'", "<span class='text-black dark:text-white'>'@glide/core'</span>");
+  if (resultString.includes("'@glide-gateway/core'")) {
+    resultString = resultString.replace("'@glide-gateway/core'", "<span class='text-black dark:text-white'>'@glide-gateway/core'</span>");
   }
   if (resultString.includes("app.use(")) {
     resultString = resultString.replace("app.use(", "<span class='text-black/50 dark:text-white/50'>app.use(</span>");
