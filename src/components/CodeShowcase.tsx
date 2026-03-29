@@ -3,15 +3,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const codeString = `// 1. Install the gateway
-// npm install @0xshae/glide-gateway
+const codeString = `import { glideMiddleware } from '@0xshae/glide-gateway';
 
-import { glideMiddleware } from '@0xshae/glide-gateway';
-
-// 2. Protect your API routes
-app.use(glideMiddleware({
-  requireWorldId: true
-}));`;
+// Protect any route
+app.use(glideMiddleware({ requireWorldId: true }));`;
 
 function SyntaxHighlight({ code }: { code: string }) {
   const lines = code.split("\n");
