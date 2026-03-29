@@ -119,7 +119,7 @@ export default function DocsPage() {
               <pre className="text-sm sm:text-base font-mono leading-relaxed text-black/80 dark:text-white/80">
                 <code>
 <span className="text-black/40 dark:text-white/40">import</span> express <span className="text-black/40 dark:text-white/40">from</span> "express";<br/>
-<span className="text-black/40 dark:text-white/40">import</span> {"{ glideMiddleware }"} <span className="text-black/40 dark:text-white/40">from</span> "@glide/core";<br/>
+<span className="text-black/40 dark:text-white/40">import</span> {"{ glideMiddleware }"} <span className="text-black/40 dark:text-white/40">from</span> "@0xshae/glide-gateway";<br/>
 <br/>
 const app = express();<br/>
 <br/>

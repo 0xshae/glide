@@ -44,6 +44,18 @@ export default function Hero() {
             <span>Add Glide to your API</span>
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
+
+          {/* Copy-to-Clipboard Installation Command */}
+          <div 
+            onClick={() => {
+              navigator.clipboard.writeText("npm install @0xshae/glide-gateway");
+              alert("Copied to clipboard!");
+            }}
+            className="group relative cursor-pointer font-mono text-sm px-4 py-2 bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-lg text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.05] transition-all"
+          >
+            <span className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black px-2 py-1 rounded text-[10px] pointer-events-none transition-opacity">Copy</span>
+            npm install @0xshae/glide-gateway
+          </div>
           
           <div className="text-black/30 dark:text-white/30 text-sm tracking-widest uppercase font-medium transition-colors">
             Powered by World ID on World Chain & Base
