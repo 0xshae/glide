@@ -1,12 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      // Prevent Turbopack from climbing up to the parent lockfile
-      root: "./",
-    },
-  },
+  /* config options here */
 };
 
 export default nextConfig;
