@@ -15,14 +15,14 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3 group hover:opacity-80 transition-opacity cursor-pointer">
             <div className="h-6 w-6 bg-black dark:bg-white rounded-full flex items-center justify-center transition-colors">
                 <div className="h-2 w-2 bg-white dark:bg-black rounded-full transition-colors" />
             </div>
             <span className="text-lg font-medium tracking-tight text-black dark:text-white transition-colors">
               Glide
             </span>
-          </div>
+          </a>
 
           {/* Nav Links - Desktop */}
           <div className="hidden md:flex items-center gap-8">
