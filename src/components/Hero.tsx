@@ -38,7 +38,7 @@ export default function Hero() {
           className="mt-20 flex flex-col items-center justify-center gap-8"
         >
           <a
-            href="#"
+            href="/docs"
             className="group flex items-center justify-between gap-6 rounded-full bg-black text-white dark:bg-white px-8 py-5 text-base font-medium dark:text-black transition-transform hover:scale-[1.02] duration-300 w-full sm:w-auto min-w-[300px]"
           >
             <span>Add Glide to your API</span>

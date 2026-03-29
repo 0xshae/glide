@@ -24,7 +24,7 @@ export default function Footer() {
           </h2>
           
           <a
-            href="#"
+            href="/docs"
             className="group flex items-center justify-center gap-4 rounded-full bg-black text-white dark:bg-white px-8 py-5 text-base font-medium dark:text-black transition-transform hover:scale-[1.02] duration-300 w-full sm:w-auto"
           >
             <span>Start Building</span>

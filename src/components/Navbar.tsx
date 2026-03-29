@@ -26,13 +26,13 @@ export default function Navbar() {
 
           {/* Nav Links - Desktop */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
+            <a href="/docs" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
               Documentation
             </a>
-            <a href="#" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
+            <a href="https://github.com/0xshae/agentic-checkout" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
               Developers
             </a>
-            <a href="#" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
+            <a href="https://worldcoin.org/world-chain" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors">
               Network
             </a>
           </div>
@@ -41,7 +41,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <a
-              href="#"
+              href="/docs"
               className="hidden md:flex items-center justify-center rounded-full bg-black text-white dark:bg-white px-5 py-2.5 text-sm font-medium dark:text-black transition-transform hover:scale-[1.02] duration-300"
             >
               Start Building
