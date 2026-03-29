@@ -1,13 +1,16 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import BentoGrid from "@/components/BentoGrid";
+import ProblemSection from "@/components/ProblemSection";
+import SolutionSection from "@/components/SolutionSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
 import CodeShowcase from "@/components/CodeShowcase";
+import UseCasesSection from "@/components/UseCasesSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a]">
-      {/* Noise overlay for texture */}
+    <div className="relative min-h-screen bg-[#0a0a0a] selection:bg-indigo-500/30 selection:text-white">
+      {/* Texture overlay for premium feel */}
       <div
         className="pointer-events-none fixed inset-0 z-50 opacity-[0.015]"
         style={{
@@ -17,10 +20,13 @@ export default function Home() {
       />
 
       <Navbar />
-      <main className="relative z-10">
+      <main className="relative z-10 flex flex-col">
         <Hero />
-        <BentoGrid />
+        <ProblemSection />
+        <SolutionSection />
+        <HowItWorksSection />
         <CodeShowcase />
+        <UseCasesSection />
       </main>
       <Footer />
     </div>

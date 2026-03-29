@@ -4,48 +4,24 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Terminal } from "lucide-react";
 
-const codeString = `import { glideGateway } from '@glide/core';
+const codeString = `import { glideMiddleware } from '@glide/core';
 
-// Protect your existing API from unpaid bots
-app.use('/premium-data', glideGateway({ 
-  botPrice: '$1.00', 
-  humanDiscount: 99 
+// Protect your API routes from fake traffic
+app.use(glideMiddleware({
+  requireWorldId: true
 }));`;
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-  },
-} as const;
 
 function SyntaxHighlight({ code }: { code: string }) {
   const lines = code.split("\n");
 
   return (
-    <div className="font-mono text-[13px] sm:text-sm leading-7">
+    <div className="font-mono text-[13px] sm:text-sm leading-8">
       {lines.map((line, i) => (
         <div key={i} className="flex">
-          <span className="select-none w-8 text-right mr-6 text-white/15 text-xs leading-7">
+          <span className="select-none w-8 text-right mr-6 text-white/10 text-xs leading-8">
             {i + 1}
           </span>
-          <span>
+          <span className="whitespace-pre">
             {colorize(line)}
           </span>
         </div>
@@ -55,78 +31,36 @@ function SyntaxHighlight({ code }: { code: string }) {
 }
 
 function colorize(line: string) {
-  // Comments
   if (line.trimStart().startsWith("//")) {
-    return <span className="text-white/25 italic">{line}</span>;
+    return <span className="text-white/30 italic">{line}</span>;
   }
 
-  // Apply token coloring
-  let result = line;
-
-  // Simple token replacement using spans
-  const tokens: { pattern: RegExp; className: string }[] = [
-    { pattern: /\b(import|from|const)\b/g, className: "text-violet-400" },
-    { pattern: /('[@/\w.-]+')/g, className: "text-emerald-400" },
-    { pattern: /\b(app)\b/g, className: "text-blue-300" },
-    { pattern: /(\/\/.*)/g, className: "text-white/25" },
-    { pattern: /(\$[\d.]+)/g, className: "text-amber-400" },
-    { pattern: /(\b\d+\b)/g, className: "text-amber-400" },
-    { pattern: /\b(glideGateway|use)\b/g, className: "text-blue-400" },
-    { pattern: /\b(botPrice|humanDiscount)\b/g, className: "text-sky-300" },
-  ];
-
-  // For simplicity, render with basic coloring instead of complex regex replacement
-  const parts: React.ReactNode[] = [];
-  let remaining = result;
-  let key = 0;
-
-  // Import keyword
-  if (remaining.includes("import")) {
-    const idx = remaining.indexOf("import");
-    if (idx > 0) parts.push(<span key={key++}>{remaining.slice(0, idx)}</span>);
-    parts.push(
-      <span key={key++} className="text-violet-400">import</span>
-    );
-    remaining = remaining.slice(idx + 6);
+  let resultString = line;
+  
+  // Highlight important terms
+  if (resultString.includes("import")) {
+    resultString = resultString.replace("import", "<span class='text-white/40'>import</span>");
+  }
+  if (resultString.includes("from")) {
+    resultString = resultString.replace("from", "<span class='text-white/40'>from</span>");
+  }
+  if (resultString.includes("'@glide/core'")) {
+    resultString = resultString.replace("'@glide/core'", "<span class='text-white'>'@glide/core'</span>");
+  }
+  if (resultString.includes("app.use(")) {
+    resultString = resultString.replace("app.use(", "<span class='text-white/60'>app.use(</span>");
+  }
+  if (resultString.includes("glideMiddleware")) {
+    resultString = resultString.replace("glideMiddleware", "<span class='text-white font-semibold'>glideMiddleware</span>");
+  }
+  if (resultString.includes("requireWorldId")) {
+    resultString = resultString.replace("requireWorldId", "<span class='text-indigo-300'>requireWorldId</span>");
+  }
+  if (resultString.includes("true")) {
+    resultString = resultString.replace("true", "<span class='text-white'>true</span>");
   }
 
-  if (remaining.includes("from")) {
-    const idx = remaining.indexOf("from");
-    if (idx > 0) parts.push(<span key={key++}>{remaining.slice(0, idx)}</span>);
-    parts.push(
-      <span key={key++} className="text-violet-400">from</span>
-    );
-    remaining = remaining.slice(idx + 4);
-  }
-
-  // Strings in single quotes
-  const stringMatch = remaining.match(/('[^']*')/);
-  if (stringMatch && stringMatch.index !== undefined) {
-    if (stringMatch.index > 0)
-      parts.push(<span key={key++}>{remaining.slice(0, stringMatch.index)}</span>);
-    parts.push(
-      <span key={key++} className="text-emerald-400">
-        {stringMatch[1]}
-      </span>
-    );
-    remaining = remaining.slice(stringMatch.index + stringMatch[1].length);
-  }
-
-  if (remaining) {
-    // Highlight special tokens in remaining
-    const highlighted = remaining
-      .replace(/\b(app)\b/g, "%%APP%%")
-      .replace(/\b(glideGateway|use)\b/g, "%%FUNC%%$1%%/FUNC%%")
-      .replace(/\b(botPrice|humanDiscount)\b/g, "%%PROP%%$1%%/PROP%%")
-      .replace(/(\$[\d.]+|\b\d+\b)/g, "%%NUM%%$1%%/NUM%%");
-
-    // Simple render without complex parsing
-    parts.push(<span key={key++} className="text-white/70">{remaining}</span>);
-  } else if (parts.length === 0) {
-    parts.push(<span key={key++} className="text-white/70">{line}</span>);
-  }
-
-  return <>{parts}</>;
+  return <span dangerouslySetInnerHTML={{ __html: resultString || line }} className="text-white/70" />;
 }
 
 export default function CodeShowcase() {
@@ -134,73 +68,34 @@ export default function CodeShowcase() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-32" id="developer">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-1/3 w-[600px] h-[400px] rounded-full bg-blue-600/[0.03] blur-[120px]" />
-      </div>
-
+    <section className="relative py-24 sm:py-32 bg-[#0a0a0a]">
       <motion.div
         ref={ref}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8"
+        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+        animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="mx-auto max-w-4xl px-6 lg:px-8"
       >
-        {/* Section header */}
-        <motion.div variants={itemVariants} className="text-center mb-16">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
-            Developer Experience
-          </span>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px rounded-2xl border border-white/[0.06] bg-white/[0.06] overflow-hidden">
-          {/* Left: Text */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-[#0a0a0a] p-8 sm:p-12 flex flex-col justify-center"
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-[-0.03em] text-white leading-tight">
-              Zero friction for them.
-              <br />
-              <span className="text-white/40">Two lines of code for you.</span>
-            </h2>
-            <p className="mt-6 text-base leading-relaxed text-white/35 max-w-md">
-              Stop rewriting your stack for the AI era. Drop Glide in front of
-              your existing APIs, and start accepting agentic payments today.
-            </p>
-            <div className="mt-8 flex items-center gap-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">
-                middleware pattern
+        <div className="rounded-3xl border border-white/[0.08] bg-[#0c0c0c] overflow-hidden shadow-2xl">
+          {/* Terminal header */}
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.04]">
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-white/10" />
+              <div className="w-3 h-3 rounded-full bg-white/10" />
+              <div className="w-3 h-3 rounded-full bg-white/10" />
+            </div>
+            <div className="flex items-center gap-2 ml-4">
+              <Terminal className="h-4 w-4 text-white/20" />
+              <span className="font-mono text-xs text-white/30">
+                middleware.ts
               </span>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right: Code */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-[#0c0c0c] p-6 sm:p-8 flex flex-col"
-          >
-            {/* Terminal header */}
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/[0.06]">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              </div>
-              <div className="flex items-center gap-2 ml-2">
-                <Terminal className="h-3 w-3 text-white/20" />
-                <span className="font-mono text-[11px] text-white/20">
-                  middleware.ts
-                </span>
-              </div>
-            </div>
-
-            {/* Code */}
-            <div className="flex-1 overflow-x-auto">
-              <SyntaxHighlight code={codeString} />
-            </div>
-          </motion.div>
+          {/* Code Body */}
+          <div className="p-8 sm:p-12 overflow-x-auto bg-[#0a0a0a]/50">
+            <SyntaxHighlight code={codeString} />
+          </div>
         </div>
       </motion.div>
     </section>
